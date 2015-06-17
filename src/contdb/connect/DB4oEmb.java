@@ -55,7 +55,7 @@ public class DB4oEmb {
     private void connect() {
         try {
             // Datenbankverbindung herstellen (CS-Modus)
-            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "DBCONT2");
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "DBCONT");
             // erweiterten ObjectContainer erzeugen
             dbExt = db.ext();
             // Metadata-Methode aufrufen

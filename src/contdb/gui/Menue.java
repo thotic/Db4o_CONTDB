@@ -854,6 +854,7 @@ public class Menue extends javax.swing.JFrame {
                 // Mietvertrag in DB speichern
                 if(db4o.insert(mietv) == true) {
                     JOptionPane.showMessageDialog(Menue.this, "Mietvertrag gespeichert!");
+                    rbSchreibenMietvActionPerformed(new ActionEvent(rbSchreibenMietv,1,"Aufruf zum leeren"));
                 }   
                 else {
                     JOptionPane.showMessageDialog(Menue.this, "Mietvertrag konnte nicht \ngespeichert werden!");
@@ -881,6 +882,7 @@ public class Menue extends javax.swing.JFrame {
                 Cont cont = new Cont(conr,ctnr,stao,edat);
                 if(db4o.insert(cont) == true) {
                     JOptionPane.showMessageDialog(Menue.this, "Container gespeichert!");
+                    rbSchreibenContActionPerformed(new ActionEvent(rbSchreibenCont,1,"Aufruf zum leeren"));
                 }   
                 else {
                     JOptionPane.showMessageDialog(Menue.this, "Container konnte nicht \ngespeichert werden!");
@@ -909,6 +911,7 @@ public class Menue extends javax.swing.JFrame {
                 ContUES contues = new ContUES(conr,ctnr,stao,edat,zhafen);
                 if(db4o.insert(contues) == true) {
                     JOptionPane.showMessageDialog(Menue.this, "Uebersee-Container gespeichert!");
+                    rbSchreibenContUESActionPerformed(new ActionEvent(rbSchreibenContUES,1,"Aufruf zum leeren"));
                 }   
                 else {
                     JOptionPane.showMessageDialog(Menue.this, "Uebersee-Container konnte nicht \ngespeichert werden!");
@@ -987,7 +990,12 @@ public class Menue extends javax.swing.JFrame {
                     listeSchreibenContPos.remove(cp);
                 }
             }
+            
+            // Tabellen aktualisieren
             aktualisiereTabSchreibenMietCont();
+            int ab  = Integer.parseInt(tfSchreibenWoab.getText() );
+            int bis = Integer.parseInt(tfSchreibenWobis.getText() );
+            sucheVerfuegbareCont(ab, bis);
             aktualisiereTabSchreibenVerCont();
         }
     }//GEN-LAST:event_btnSchreibenContEntfernenActionPerformed
@@ -1014,7 +1022,10 @@ public class Menue extends javax.swing.JFrame {
             
             // Containerposition in Liste speichern
             listeSchreibenContPos.add(cp);
+            
+            // Tabellen aktualisieren
             aktualisiereTabSchreibenMietCont();
+            sucheVerfuegbareCont(woab, wobis);
             aktualisiereTabSchreibenVerCont();
         }
     }//GEN-LAST:event_btnSchreibenContHinzuActionPerformed
