@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package contdb.gui;
 
 import contdb.connect.DB4oEmb;
@@ -12,9 +7,11 @@ import contdb.entities.ContUES;
 import contdb.entities.Mietv;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -110,7 +107,7 @@ public class Menue extends javax.swing.JFrame {
         tabMietvertrag = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabMetadaten = new javax.swing.JTable();
+        tabContPos = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         subpanelLesenMetadaten = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -141,9 +138,7 @@ public class Menue extends javax.swing.JFrame {
             }
         });
 
-        jLayeredPaneSchreiben.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        subpanelSchreibenMietv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tfSchreibenMietvMietnr.setEditable(false);
 
         tfSchreibenMietvKnr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,7 +286,7 @@ public class Menue extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSchreibenContEntfernen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         subpanelSchreibenMietvLayout.setVerticalGroup(
             subpanelSchreibenMietvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,8 +326,6 @@ public class Menue extends javax.swing.JFrame {
                 .addComponent(jLabel20)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        subpanelSchreibenCont.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel8.setText("Containernummer:");
 
@@ -393,8 +386,6 @@ public class Menue extends javax.swing.JFrame {
                     .addComponent(jLabel22))
                 .addContainerGap(237, Short.MAX_VALUE))
         );
-
-        subpanelSchreibenContUES.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel12.setText("Containernummer:");
 
@@ -525,7 +516,7 @@ public class Menue extends javax.swing.JFrame {
                             .addComponent(rbSchreibenMietv))
                         .addGap(18, 18, 18)
                         .addComponent(jLayeredPaneSchreiben, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         panelSchreibenLayout.setVerticalGroup(
             panelSchreibenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,7 +534,7 @@ public class Menue extends javax.swing.JFrame {
                         .addComponent(jLayeredPaneSchreiben, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32)
                 .addComponent(btnEntitaetSpeichern)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Schreiben", panelSchreiben);
@@ -561,8 +552,6 @@ public class Menue extends javax.swing.JFrame {
                 rbLesenMetadatenActionPerformed(evt);
             }
         });
-
-        subpanelLesenMietv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tabMietvertrag.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -587,23 +576,28 @@ public class Menue extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabMietvertrag.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMietvertragMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabMietvertrag);
 
         jLabel17.setText("Mietvertrag");
 
-        tabMetadaten.setModel(new javax.swing.table.DefaultTableModel(
+        tabContPos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Conr", "Woab", "Wobis", "Ctnr", "Stao", "Edat"
+                "Conr", "Woab", "Wobis", "Ctnr", "Stao", "Edat", "Zielhafen"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -614,7 +608,7 @@ public class Menue extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tabMetadaten);
+        jScrollPane2.setViewportView(tabContPos);
 
         jLabel18.setText("Containerpositionen");
 
@@ -623,20 +617,24 @@ public class Menue extends javax.swing.JFrame {
         subpanelLesenMietvLayout.setHorizontalGroup(
             subpanelLesenMietvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(subpanelLesenMietvLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
                 .addGroup(subpanelLesenMietvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(subpanelLesenMietvLayout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(subpanelLesenMietvLayout.createSequentialGroup()
+                        .addGroup(subpanelLesenMietvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
+                        .addContainerGap(81, Short.MAX_VALUE))))
         );
         subpanelLesenMietvLayout.setVerticalGroup(
             subpanelLesenMietvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(subpanelLesenMietvLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jLabel18)
@@ -644,8 +642,6 @@ public class Menue extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
-
-        subpanelLesenMetadaten.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         taLesenMetadaten.setColumns(20);
         taLesenMetadaten.setRows(5);
@@ -675,7 +671,7 @@ public class Menue extends javax.swing.JFrame {
             .addGroup(jLayeredPaneLesenLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(subpanelLesenMietv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(jLayeredPaneLesenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPaneLesenLayout.createSequentialGroup()
                     .addContainerGap()
@@ -764,9 +760,19 @@ public class Menue extends javax.swing.JFrame {
         subpanelSchreibenMietv.setVisible(true);
         subpanelSchreibenCont.setVisible(false);
         subpanelSchreibenContUES.setVisible(false);
-        
+ 
+        // Autoinkrement auf Mietv
+        List<Integer> listMietnr = new LinkedList<>();
+        List<Object> lo = db4o.read(new Mietv());
+        for(Object o : lo) {
+            Mietv m = (Mietv) o;
+            listMietnr.add(m.getMietnr());
+        }
+        Collections.sort(listMietnr);
+        int mietnr = (listMietnr.get(listMietnr.size()-1)) + 1;
+        tfSchreibenMietvMietnr.setText(String.valueOf(mietnr));
+                
         // Alle Eingaben loeschen
-        this.tfSchreibenMietvMietnr.setText("");
         this.tfSchreibenMietvKnr.setText("");
         this.tfSchreibenMietvMietdat.setText("");
         this.tfSchreibenWoab.setText("");
@@ -810,11 +816,12 @@ public class Menue extends javax.swing.JFrame {
         rbSchreibenContUES.setSelected(false);
         
         if(buttonGroupSchreiben.isSelected(rbSchreibenMietv.getModel() ) ) {
-            try {
+            try {               
                 // Mietv Objekt erstellen
-                int mietnr = Integer.parseInt(tfSchreibenMietvMietnr.getText());
-                int knr = Integer.parseInt(tfSchreibenMietvKnr.getText());
+                int mietnr = Integer.parseInt(tfSchreibenMietvMietnr.getText());               
+                int knr    = Integer.parseInt(tfSchreibenMietvKnr.getText());
                 Date mietdat;
+                // Bei leerem Datumsfeld wir das aktuelle gespeichert
                 if( (tfSchreibenMietvMietdat.getText()).equals("")) {
                     mietdat = new Date();
                 }
@@ -824,7 +831,7 @@ public class Menue extends javax.swing.JFrame {
                 }                             
                 Mietv mietv = new Mietv(mietnr,knr,mietdat,listeSchreibenContPos);
                 
-                
+                // Mietvertrag in DB speichern
                 if(db4o.insert(mietv) == true) {
                     JOptionPane.showMessageDialog(Menue.this, "Mietvertrag gespeichert!");
                 }   
@@ -901,6 +908,10 @@ public class Menue extends javax.swing.JFrame {
         subpanelLesenMetadaten.setVisible(false);
         // Mietv Objekte aus Db holen
         List<Object> mietvList = db4o.read(new Mietv());
+        
+        DateFormat df;
+        df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.GERMANY);
+        
         // Und in Tabelle einfuegen
         DefaultTableModel model = (DefaultTableModel) tabMietvertrag.getModel();
         model.setRowCount(0);
@@ -909,9 +920,12 @@ public class Menue extends javax.swing.JFrame {
             model.addRow(new Object [] { 
                 m.getMietnr(),
                 m.getKnr(),
-                m.getMietdat()
+                df.format(m.getMietdat())
             });
         }
+        // Tabelle mit Containerpositionen loeschen
+        DefaultTableModel modelCP = (DefaultTableModel) tabContPos.getModel();
+        modelCP.setRowCount(0);
         
     }//GEN-LAST:event_rbLesenMietvActionPerformed
 
@@ -943,7 +957,7 @@ public class Menue extends javax.swing.JFrame {
             int wobis = (int) tabSchreibenMietCont.getModel().getValueAt(row, 2);
             
             // Containerposition aus DB loeschen
-            System.out.println(db4o.insert(new ContPos(conr,woab,wobis)));
+            System.out.println(db4o.delete(new ContPos(conr,woab,wobis)));
             
             // Containerposition aus Liste entfernen
             for(ContPos cp : listeSchreibenContPos) {
@@ -1006,12 +1020,61 @@ public class Menue extends javax.swing.JFrame {
             int wobis = Integer.parseInt(tfSchreibenWobis.getText() );
             if(woab>=1 && woab<=wobis && wobis<=52) {
                 this.sucheVerfuegbareCont(woab, wobis);
+                aktualisiereTabSchreibenVerCont();
             }
-            aktualisiereTabSchreibenVerCont();
+            else {
+                JOptionPane.showMessageDialog(Menue.this, "Bitte Info fuer Woab und Wobis beachten.");
+            }    
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(Menue.this, "Bitte Info fuer Woab und Wobis beachten.");
+            JOptionPane.showMessageDialog(Menue.this, "Falsche Sucheingabe!!");
         }
     }//GEN-LAST:event_btnSchreibenMietvSuchenActionPerformed
+
+    private void tabMietvertragMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMietvertragMouseClicked
+        if(tabMietvertrag.getSelectedRow() == -1) {
+            if(tabMietvertrag.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(Menue.this, "Keine Mietvertraege\n vorhanden!");
+            }
+            else {
+                JOptionPane.showMessageDialog(Menue.this, "Keine Mietvertraege\n ausgewahlt!");
+            }
+        }
+        else {
+            
+            // Mietnummer auslesen und Containerpositionen raussuchen
+            int row   = tabMietvertrag.getSelectedRow();
+            int mietnr  = (int) tabMietvertrag.getModel().getValueAt(row, 0);            
+            
+            Mietv m  = (Mietv) db4o.find(new Mietv(mietnr));
+            List<ContPos> listeCP = m.getContPosListe();
+            
+            DateFormat df;
+            df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.GERMANY);
+            
+            // Containerpositionen mit Zusatzinformationen ausgeben
+            DefaultTableModel model = (DefaultTableModel) tabContPos.getModel();
+            model.setRowCount(0);
+            for(ContPos cp : listeCP) {
+                int conr  = cp.getConr();
+                int woab  = cp.getWoab();
+                int wobis = cp.getWobis();
+                
+                Cont c = (Cont) db4o.find(new Cont(conr));
+                ContUES cu;
+                
+                try{
+                    cu = (ContUES) c;
+                    model.addRow( new Object [] {
+                        conr, woab, wobis, cu.getCtnr(), cu.getStao(), df.format(cu.getEdat()), cu.getZhafen()
+                    }); 
+                } catch (ClassCastException e) {
+                    model.addRow( new Object [] {
+                        conr, woab, wobis, c.getCtnr(), c.getStao(), df.format(c.getEdat()), "kein UES"
+                    });    
+                }
+            }  
+        }
+    }//GEN-LAST:event_tabMietvertragMouseClicked
 
     private void myInitComponents() {
         buttonGroupSchreiben.add(rbSchreibenMietv);
@@ -1081,7 +1144,7 @@ public class Menue extends javax.swing.JFrame {
     private javax.swing.JPanel subpanelSchreibenContUES;
     private javax.swing.JPanel subpanelSchreibenMietv;
     private javax.swing.JTextArea taLesenMetadaten;
-    private javax.swing.JTable tabMetadaten;
+    private javax.swing.JTable tabContPos;
     private javax.swing.JTable tabMietvertrag;
     private javax.swing.JTable tabSchreibenMietCont;
     private javax.swing.JTable tabSchreibenVerCont;
@@ -1102,13 +1165,17 @@ public class Menue extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void sucheVerfuegbareCont(int ab, int bis) {
+        // Liste mit Containern leeren
+        listeSchreibenCont.clear();
         
         // Alle Container aus DB holen
         List<Object> listContObj = db4o.read(new Cont() );
-        listeSchreibenCont.clear();
+        List<Cont>   listCont    = new LinkedList<>();
         for(Object o : listContObj) {
+            listCont.add( (Cont) o);
             listeSchreibenCont.add( (Cont) o);
         }
+        
         // Alle Containerpoesitionen aus DB holen
         List<Object>  listContPosObj = db4o.read(new ContPos() );
         List<ContPos> listContPos    = new LinkedList<>();
@@ -1117,19 +1184,20 @@ public class Menue extends javax.swing.JFrame {
         }
         
         // Nicht verfuegbare Container aussortieren
-        for(Cont c : listeSchreibenCont) {
+        for(Cont c : listCont) {
             for(ContPos cp : listContPos) {
                 if(cp.getConr()==c.getConr()) {
                     int woab  = cp.getWoab();
                     int wobis = cp.getWobis();
                     if(
-                            (ab < woab && bis > woab) ||
-                            (ab > woab && ab < wobis) ||
-                            (bis < wobis && bis > woab) ||
-                            (bis > wobis && ab < wobis)
+                            (ab < woab   && bis > woab)  ||
+                            (ab > woab   && ab < wobis)  ||
+                            (bis < wobis && bis > woab)  ||
+                            (bis > wobis && ab < wobis)  ||
+                            (ab == woab  && bis == wobis)
                        ) {
                             listeSchreibenCont.remove(c);
-                            //return;
+                            break;
                     }
                 }
             }
@@ -1164,5 +1232,4 @@ public class Menue extends javax.swing.JFrame {
         }     
     }
     
-
 }

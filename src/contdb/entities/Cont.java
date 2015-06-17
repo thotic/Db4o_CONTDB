@@ -18,6 +18,11 @@ public class Cont {
     public Cont() {
     }
 
+    public Cont(int conr) {
+        this.conr = conr;
+    }
+    
+
     public Cont(int conr, int ctnr, String stao, Date edat) {
         this.conr = conr;
         this.ctnr = ctnr;

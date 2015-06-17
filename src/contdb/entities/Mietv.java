@@ -26,6 +26,11 @@ public class Mietv {
         contPosListe = new LinkedList<>();
     }
 
+    public Mietv(int mietnr) {
+        this.mietnr = mietnr;
+    }
+    
+
     public Mietv(int mietnr, int knr, Date mietdat, List<ContPos> contPosListe) {
         this.mietnr = mietnr;
         this.knr = knr;
