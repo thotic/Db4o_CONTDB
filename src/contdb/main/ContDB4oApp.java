@@ -4,6 +4,7 @@ import contdb.connect.DB4oEmb;
 import contdb.entities.Cont;
 import contdb.entities.ContPos;
 import contdb.entities.ContUES;
+import contdb.entities.Mietv;
 import contdb.gui.Menue;
 import java.util.Date;
 import java.util.List;
@@ -34,8 +35,18 @@ public class ContDB4oApp {
         });
         
           
-        // Kontroll Menue ///////////////////////////
+//////////////////    Kontroll Menue     ///////////////////////////////////////
         try {
+            // Lesen ContPos
+            List<Object> mietvListe = db4o.read(new Mietv());
+            System.out.println("Mietv: ");
+            for(Object o : mietvListe) {
+                Mietv m = (Mietv) o;
+                System.out.println(m.getMietnr()+" "+m.getKnr()+"CP :");
+                for(ContPos cp : m.getContPosListe()) {
+                    System.out.println("\t"+cp.getConr()+" "+cp.getWoab()+" "+cp.getWobis()+"\n");
+                }
+            }
             // Lesen ContPos
             List<Object> contPosListe = db4o.read(new ContPos());
             System.out.println("ContPos: ");
@@ -63,7 +74,7 @@ public class ContDB4oApp {
             // Connection schliessen
             //db4o.closeConnection();
         }
-        
+////////////////////////////////////////////////////////////////////////////////////
         
 
     }
